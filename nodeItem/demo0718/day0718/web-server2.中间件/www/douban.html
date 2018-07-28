@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>豆瓣</h1>
+
+    <script src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/js/lib/jquery-1.10.2_d88366fd.js"></script>
+    <script>
+        $.ajax({
+            url: '/v2/movie/in_theaters',
+            data: {
+                city: '深圳'
+            },
+            type: 'GET',
+            success: function(data){
+                console.log('请求成功');
+                console.log(data);
+            },
+            fail: function(error){
+                console.log('请求失败');
+                console.log(error);
+            }
+        })
+
+
+        $.ajax({
+            url: '/v2/movie/coming_soon',
+            data: {
+                start: 0,
+                count: 10
+            },
+            type: 'GET',
+            success: function(data){
+                console.log('请求成功');
+                console.log(data);
+            },
+            fail: function(error){
+                console.log('请求失败');
+                console.log(error);
+            }
+        })
+        
+        $.ajax({
+            url: '/v2/movie/top250',
+            data: {
+                start: 0,
+                count: 10
+            },
+            type: 'GET',
+            success: function(data){
+                console.log('请求成功');
+                console.log(data);
+            },
+            fail: function(error){
+                console.log('请求失败');
+                console.log(error);
+            }
+        })
+
+    </script>
+    
+</body>
+</html>

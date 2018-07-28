@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			ul{
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<ulcomponent></ulcomponent>
+		</div>
+	</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+/*买2件8.8折	 买4件7.8折	500-50   700—100	
+ 邮费：20	满399包邮	为您优惠了：？	 求应付：？ */
+
+	var warp = new Vue({
+		el:'#wrap',
+		components:{
+			ulcomponent:{
+				data:function(){
+					return {
+						goodsArr:[
+						{'name':'牛肉干','price':88,'count':0},
+						{'name':'萝卜干','price':99,'count':0},
+						{'name':'龙眼干','price':66,'count':0},
+						{'name':'青菜干','price':28,'count':0},
+						{'name':'番薯干','price':38,'count':0}
+						]
+					}
+				},
+				template:
+//				`<div>
+					`<ul>
+						<li v-for="(item,index) in goodsArr">
+							{{item.name}}---{{item.price}}元---
+							<button @click="subtractAction(index)">➖</button>
+							<input type="text" v-model="item.count" />
+							<button @click="addAction(index)">➕</button>
+						</li>
+					</ul>`
+//					<h3>总价:{{total}}
+//						&nbsp;&nbsp;折后价:{{discount}}
+//						&nbsp;&nbsp;满减:{{deducePrice}}
+//						&nbsp;&nbsp;邮费:{{postage}}
+//						&nbsp;&nbsp;应付价:{{pay}}元
+//					</h3>
+//				</div>`
+				,
+				computed:{
+		//			商品总价
+					total(){
+						var tmp = 0;
+						console.log(goodsArr)
+						this.goodsArr.map((item)=>{
+							tmp += item.price * item.count;
+						})
+						return tmp;
+					},
+		//			折后价
+					discount(){
+						var count = 0;
+						this.goodsArr.map((item)=>{
+							count += item.count;
+						})
+		//				2到4件商品8.8折
+						if (2<=count&&count<4) {
+							return Math.round(this.total * 88)/100;
+		//				4+件7.8折
+						}else if(count>=4){
+							return Math.round(this.total * 78)/100;
+						}else{
+							return this.total;
+						}
+					},
+		//			满减
+					deducePrice(){
+						var tmp = this.discount
+		//				如果打完折的价格在500~700间减50
+						if (tmp>=500&&tmp<700) {
+							return Math.round((tmp - 50)*100)/100;
+		//				大于700减100
+						}else if(tmp>=700){
+							return Math.round((tmp - 100)*100)/100;
+						}else{
+							return tmp;
+						}
+					},
+		//			邮费
+					postage(){
+						var tmp = this.deducePrice;
+		//				如果在1-399间20邮费
+						if (tmp<399&&tmp>0) {
+							return 20;
+		//					超过399包邮
+						}else{
+							return 0;
+						}				
+					},
+		//			应付
+					pay(){
+						return this.deducePrice + this.postage;
+					}
+				},
+				methods:{
+					subtractAction(index){
+						console.log(this.goodsArr)
+						this.goodsArr[index].count--;
+					},
+					addAction(index){
+						this.goodsArr[index].count++;
+					}
+				},
+				
+			}
+		}
+	})
+   
+</script>

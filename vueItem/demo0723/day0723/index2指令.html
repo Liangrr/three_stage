@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .box{
+        width: 100px;
+        height: 100px;
+        background: red;
+    }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <!-- 
+            指令：
+            给标签添加属性 v-<指令名字>="js表达式"
+            指令会根据标签的不同，添加不同的功能
+         -->
+
+        <!-- v-text   功能：innerText -->
+        <div v-text="message"></div>
+        <div v-text="1+2+3+message"></div>
+        <!-- 简写方式 -->
+        <div>{{message}}</div>
+
+        
+        <!-- v-html 功能：innerHtml -->
+         <div v-html="message2"></div>
+
+
+        <!-- v-show 功能：通过控制标签的display来控制标签的显示 -->
+         <div class="box" v-show="isShow">box</div>
+         <span v-show="isShow">test</span>
+
+
+         <br/>
+         <br/>
+         <br/>
+
+         <!-- v-if 功能：通过控制标签是否存在在dom中来控制标签的显示 -->
+         <div class="box" v-if="isShow">box</div>
+         <span v-if="isShow">test</span>
+
+
+         
+    </div>
+
+
+    <script src="vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue!',
+                message2: '<mark>hello vue!</mark>',
+                isShow: true
+            }
+        })
+    </script>
+</body>
+</html>

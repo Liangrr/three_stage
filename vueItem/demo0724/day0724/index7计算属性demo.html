@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <p>商品价格：{{price}}</p>
+        <p>购买数量：<input type="number" v-model.number="count"/></p>
+        <p>邮费：{{free}}</p>
+        <p>应付：{{pay}}</p>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+
+    /*
+    商品：49
+    购买数量：
+    邮费：20
+    299包邮
+    求应付？
+    */
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            price: 49,
+            count: ''
+        },
+        //计算属性
+        computed: {
+            free(){
+                var tmp = this.price * this.count;
+                return tmp > 299 ? 0 : 20;
+            },
+            pay(){
+                var tmp = this.price * this.count;//商品总价
+                if(tmp>0){
+                    return tmp + this.free;//总价+运费
+                }else{
+                    return '';
+                }
+                
+            }
+        }
+    });
+
+    /*
+    作业：
+    买2件8.8折
+    买4件7.8折
+    500-50   700—100
+    邮费：20
+    满399包邮
+    为您优惠了：？
+    求应付：？
+    */
+    
+    </script>
+</body>
+</html>

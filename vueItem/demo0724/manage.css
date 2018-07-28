@@ -1,0 +1,66 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+#wrap{
+	margin: 10px 50px;
+	width: 400px;
+	height: 500px;
+	padding: 25px;
+	box-sizing: border-box;
+	border: 1px solid dodgerblue;
+}
+.register,.show,.modify{
+	width: 350px;
+	height: 275px;
+	border: 1px solid red;
+	box-sizing: border-box;
+}
+.register>span,.modify>span{
+	text-align:center;
+	display: inline-block;
+	width: 70px;
+	height: 30px;
+	line-height: 30px;
+}
+#name{
+	width: 150px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #ccc;
+	padding-left: 10px;
+	box-sizing: border-box;
+}
+.register textarea,.modify textarea{
+	width: 250px;
+	height: 70px;
+	resize: none;
+	padding: 10px;
+	box-sizing: border-box;
+}
+.bz{
+	float: left;
+}
+.register button,.modify button{
+	margin-left: 20px;
+	margin-top: 10px;
+	width: 80px;
+	height: 30px;
+}
+ul.list{
+	width: 350px;
+	height: 175px;
+	border: 1px solid yellow;
+	box-sizing: border-box;
+	list-style: none;
+	padding: 10px;
+	overflow-y: auto;
+}
+ul.list li,.show p{
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	box-sizing: border-box;
+	padding-left: 20px;
+}
+

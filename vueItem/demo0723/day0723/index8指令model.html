@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .box{
+        width: 100px;height: 100px;background: red;
+    }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <!-- 
+            v-model 专门绑定表单数据
+            text tel address email url number ....
+
+            checkbox
+            radio
+            textarea
+            select
+
+         -->
+        <p>message:{{message}}</p>
+        <input type="text" v-model="message">
+
+        <p>num:{{num}}</p>
+        <!-- .number将输入的值转数字 -->
+        <input type="number" v-model.number="num">
+
+
+        <!-- 多选框 -->
+         <br/>
+        <input type="checkbox" v-model="isShow">
+        <div class="box" v-show="isShow"></div>
+
+        <p>请选择你感兴趣的内容：</p>
+        <input type="checkbox" v-model="arr" value="HTML">HTML
+        <input type="checkbox" v-model="arr" value="CSS">CSS
+        <input type="checkbox" v-model="arr" value="JS">JS
+        <input type="checkbox" v-model="arr" value="VUE">VUE
+        <input type="checkbox" v-model="arr" value="React">React
+
+
+        <!-- 单选框 -->
+        <p>请选择性别：</p>
+         <input type="radio" value="男" v-model="sex">男
+         <input type="radio" value="女" v-model="sex">女
+
+
+         <!-- 下拉菜单 -->
+         <p>请选择出生年份</p>
+         <select v-model="year">
+             <option value="1990">1990</option>
+             <option value="1991">1991</option>
+             <option value="1992">1992</option>
+             <option value="1993">1993</option>
+             <option value="1994">1994</option>
+         </select>
+
+
+         <!-- 多行文本输入框 -->
+         <input type="text" value="test"/>
+         <textarea cols="30" rows="10" v-model="message"></textarea>
+
+    </div>
+    
+    <script src="vue.js"></script>
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello vue',
+            num: 1234,
+            isShow: true,
+            arr: ['HTML', 'CSS', 'angular'],
+            sex: '男',
+            year: 1994
+        }
+
+    })
+    </script>
+
+
+</body>
+</html>

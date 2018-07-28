@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <p>{{message}}</p>
+        <input type="text" v-model="message">
+        <button @click="print()">test</button>
+    </div>
+
+    <button onclick="btn1Action()">挂载</button>
+    <button onclick="btn2Action()">销毁</button>
+
+
+    <script src="vue.js"></script>
+    <script>
+    
+    var vm = new Vue({
+        // el: "#app",
+        data: {
+            message: 'hello vue'
+        },
+        methods: {
+            print(){
+                console.log(this.message);
+            }
+        }
+    });
+
+    var btn1Action = function(){
+        //将vm实例挂载到dom中
+        // 销毁实例后，不在执行挂载
+        vm.$mount('#app');
+    }
+
+    
+    var btn2Action = function(){
+        //销毁vm实例跟dom的联系，并没有将vm实例对象销毁
+        vm.$destroy();
+    }
+    
+
+    /*
+    new Vue({
+        data: {
+            message: 'hello vue'
+        }
+    }).$mount('#app');
+    */
+
+
+
+    
+    </script>
+</body>
+</html>

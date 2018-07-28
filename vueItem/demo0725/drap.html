@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#box{
+				width: 100px;
+				height: 100px;
+				background-color: dodgerblue;
+			}
+		</style>
+	</head>
+	<body> 
+		<div id="box" v-drap.y.x=""></div>
+	</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+/*	v-drag  可拖拽
+    v-drag=false   不可拖拽
+    v-drag=true   可拖拽
+    v-drag.x   x轴可拖拽，y轴不可拖拽
+    v-drag.y   y轴可拖拽，x轴不可拖拽
+    v-drag.x.y   y轴可拖拽，x轴可拖拽*/
+   
+	Vue.directive('drap', (el, info)=>{
+//		这里是判断输入为false时,不能移动
+		console.log(el,info)
+   		if (!info.value && info.expression) {
+   			return ;
+   		}
+// 		定义X或Y是否存在
+   		var isX = info.modifiers.x;
+   		var isY = info.modifiers.y;
+// 		定义一个停止时记录位置的参数
+   		var l=0,t=0;
+    	el.onmousedown = function(e){
+//  		记录点击时的位置
+			var disX = e.clientX - l;
+			var disY = e.clientY - t;
+			document.onmousemove = function(e){
+//				点击移动后的位置
+				l = e.clientX - disX;
+				t = e.clientY - disY;
+//				判断X或Y或者XY
+				if (isX && isY) {
+					el.style.transform = 'translate('+ l +'px,'+ t +'px)';
+				}else if(isX){
+					el.style.transform = 'translateX('+ l +'px)';
+				}else if(isY){
+					el.style.transform = 'translateY('+ t +'px)';
+				}
+			};
+			document.onmouseup = function(e){
+//				放下时清空移动,鼠标松手事件
+				document.onmousemove=null;
+                document.onmouseup=null;
+			};
+		}
+    })
+	
+	var box = new Vue({
+		el:'#box',
+	})
+</script>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .box{
+        width: 100px;
+        height: 100px;
+        background: red;
+        margin: 10px;
+    }
+    .wrap{
+        padding: 100px;
+        background: yellow;
+    }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+
+        <!-- 
+            v-on指令：绑定事件。
+            1.以前的所有的事件都可以在vue中实现，写法发生了变化
+            2.方法的配置可以加()方便传参。事件对象需要通过$event传递。
+            也可以不加()，事件对象方法直接获得。
+
+         -->
+
+        <!-- <button onclick="testAction()">按钮</button> -->
+        <button v-on:click="testAction('a', 'b', 'c', $event)">按钮1</button>
+
+        <button v-on:click="testAction($event)">按钮2</button>
+        <button v-on:click="testAction">按钮3</button>
+
+
+        <div class="box" v-on:mousemove="printAction()">按钮4</div>
+
+
+        <div class="box" @click="testAction"></div>
+
+
+
+        <!-- on指令的修饰符 -->
+        <!-- .prevent修饰，阻止默认事件 -->
+        <div class="wrap" @click="wrapAction" @contextmenu.prevent="wrapContextmenu">
+            wrap
+            <!-- .stop修饰，阻止事件冒泡 -->
+            <div class="box" @click.stop="boxAction" @contextmenu.stop.prevent="boxContextmenu">box</div>
+        </div>
+
+        <!-- .once修饰，事件只执行一次 -->
+        <button v-on:click.once="testAction">按钮3</button>
+
+    </div>
+    
+    <script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello vue'
+        },
+        //配置vm实例的方法，直接通过vm访问
+        methods: {
+            testAction: function(...rest){
+                alert(2);
+                this.printAction();
+                console.log(this.message);
+                console.log('参数：', ...rest);
+            },
+            printAction: function(){
+                console.log('print action执行了');
+            },
+            wrapAction(){
+                console.log('wrapActionn执行了');
+
+            },
+            boxAction(){
+                console.log('boxAction执行了');
+
+            },
+            wrapContextmenu(){
+                console.log('wrapContextmenu执行了');
+
+            },
+            boxContextmenu(){
+                console.log('boxContextmenu执行了');
+
+            }
+        }
+
+    })
+
+    var testAction = function(){
+        alert(1);
+    }
+
+</script>
+
+</body>
+</html>

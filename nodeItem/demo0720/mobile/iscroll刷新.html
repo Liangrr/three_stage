@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>移动端界面</title>
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_665467_29kntkti3a7.css"/>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			body,
+			html {
+				width: 100%;
+				height: 100%;
+			}
+			
+			header {
+				width: 100%;
+				height: 44px;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
+			.title {
+				width: 100%;
+				text-align: center;
+				line-height: 44px;
+				background-color: #aaa;
+			}
+			
+			section {
+				width: 100%;
+				position: absolute;
+				left: 0;
+				top: 44px;
+				bottom: 49px;
+				overflow: hidden;
+			}
+			
+			.refresh,.loadmore{
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+				background-color: #eee;
+				text-align: center;
+				color: black;
+			}
+			
+			.refresh b ,.loadmore b{
+				font-size: 20px;
+				display: inline-block;
+			}
+			
+			.banner {
+				height: 200px;
+				background-color: #669CFF;
+			}
+			
+			.sold_top {
+				height: 350px;
+				background-color: #F15A0C;
+			}
+			
+			.goodslists {
+				height: 250px;
+				background-color:pink;
+			}
+			
+			footer {
+				width: 100%;
+				height: 49px;
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				list-style: none;
+				display: flex;
+				background-color: #aaa;
+			}
+			
+			footer .tab {
+				flex: 1;
+				text-align: center;
+				line-height: 49px;
+			}
+			
+			@keyframes ratateAni{
+			    0%{transform: rotate(0deg);}
+			    100%{transform: rotate(360deg);}
+			}
+			.active{
+			    animation: ratateAni 1s infinite linear;
+			}
+		</style>
+	</head>
+	<body>
+		<!--头部-->
+		<header>
+			<!--标题-->
+			<div class="title">首页</div>
+		</header>
+		
+		<!--文本主体-->
+		<section>
+			<div>
+				<div class="refresh">
+					<b class="iconfont icon-btm"></b>
+					<span>向下可以刷新...</span>
+				</div>
+				<div class="banner">
+				 	广告
+				</div>
+	        	<div class="sold_top">热销榜单</div>
+            	<div class="goodslists">推荐商品</div>
+            	
+            	<div class="loadmore">
+					<b class="iconfont icon-top"></b>
+					<span>向上加载更多...</span>
+				</div>
+			</div>
+		</section>
+		<!--尾部-->
+		<footer>
+			<li class="tab">首页</li>
+			<li class="tab">发现</li>
+			<li class="tab">动态</li>
+			<li class="tab">设置</li>
+		</footer>
+		<script src="bundle/iscroll-probe.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
+<script type="text/javascript">
+//	使用iscroll
+	var myScroll = new IScroll('section',{
+//		使用滚动时参数
+		probeType:3,
+//		初始时Y轴的位置
+		startY:-50
+	});
+//	获取b和span
+	var ref_b = document.querySelector('.refresh b');
+	var ref_span = document.querySelector('.refresh span');
+	
+//	向下刷新
+//	滚动停止时
+	myScroll.on('scrollEnd',function(){
+//		获取滚蛋停止时的y坐标
+		var y = myScroll.y;
+		if(y>=0){
+//			执行刷新动画
+			ref_b.className = 'iconfont icon-refresh active';
+			ref_span.innerText = '正在刷新...'
+//			延迟器,刷新俩秒后重新获取数据
+			setTimeout(function(){
+				myScroll.scrollTo(0, -50, 300);
+				ref_b.className = 'iconfont icon-btm';
+				ref_span.innerText = '向下可以刷新...';
+			    // 更新滚动视图
+    			myScroll.refresh();
+			},2000);
+//		停止时坐标在这个范围就给定一个位置的值
+		}else if(y < 0 && y > -50){
+	        myScroll.scrollTo(0, -50, 300);
+	    }
+	})
+	
+	myScroll.on('scroll',function(){
+		var y = myScroll.y;
+		if (-50 < y && y < 0) {
+			ref_b.className = 'iconfont icon-btm';
+			ref_span.innerText = '向下可以刷新...'
+		}else if(y >= 0){
+			ref_b.className = 'iconfont icon-top';
+			ref_span.innerText = '释放可以刷新...'
+		}
+	})
+	
+	
+//	向上加载更多
+	var loadmore_b = document.querySelector('.loadmore>b');
+	var loadmore_span = document.querySelector('.loadmore>span');
+	myScroll.on('scrollEnd',function(){
+		var y = myScroll.y;
+		var max = myScroll.maxScrollY;
+		
+		if (y<=max) {
+			loadmore_b.className = 'iconfont icon-refresh active';
+			loadmore_span.innerText = '正在刷新...'
+//			延迟器,刷新俩秒后重新获取数据
+			setTimeout(function(){
+				myScroll.scrollTo(0, max, 300);
+				loadmore_b.className = 'iconfont icon-top';
+				loadmore_span.innerText = '向上可以加载更多...';
+				document.querySelector('.goodslists').style.height = '555px';
+			    // 更新滚动视图
+    			myScroll.refresh();
+			},2000);
+		}else if(max < y && y< (max+50)){
+			myScroll.scrollTo(0, (max+50), 300);
+		}
+	})
+	
+	myScroll.on('scroll',function(){
+		var y = myScroll.y;
+		var max = myScroll.maxScrollY;
+		if (max < y && y < (max+50)) {
+			loadmore_b.className = 'iconfont icon-top';
+			loadmore_span.innerText = '向上可以加载...'
+		}else if(y<=max){
+			loadmore_b.className = 'iconfont icon-btm';
+			loadmore_span.innerText = '释放可以加载...'
+		}
+	})
+</script>

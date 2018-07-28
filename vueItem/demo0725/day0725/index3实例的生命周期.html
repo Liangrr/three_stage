@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <p class="info1" ref="info1">{{message}}</p>
+        <input type="text" v-model="message">
+        <button @click="modifyAction()">修改</button>
+        <button @click="updateAction()">更新</button>
+
+        <p class="info2" ref="info2">{{obj.name}}</p>
+
+        <p v-for="num in 5" ref="num">{{num}}</p>
+        
+        
+        
+    </div>
+
+    <div id="app2">
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello vue',
+            obj: {
+                name: 'qwer'
+            },
+            datalist: [],
+            bannerList: []
+        },
+        computed: {
+
+        },
+        watch: {
+
+        },
+        methods: {
+            testAction(){
+                console.log('testAction调用');
+            },
+            modifyAction(){
+                console.log('修改');
+                this.message = 'hello world';
+                //属性发生变化，监听dom更新完成的事件
+                // 属性修改后，不要任何代码，执行监听
+                this.$nextTick(()=>{
+                    console.log('nextTick执行');
+                });
+
+                console.log(this.message);
+                console.log(this.$refs.info1.innerText);
+                //更新轮播，滚动
+
+            },
+            updateAction(){
+                this.$forceUpdate();
+            }
+        },
+        //实例创建前，什么也做不了
+        beforeCreate(){
+            console.log('beforeCreate执行了');
+            // console.log(this.message);
+            // this.testAction();
+        },
+        created(){
+            console.log('created执行了');
+            // this.obj.name = '123456';
+        },
+        beforeMount(){
+            console.log('beforeMount执行了');
+            // console.log(document.querySelector('.info1').innerText);
+            // console.log(this.$refs);
+            // console.log(this.$refs.info1);
+            // console.log(this.$refs.info2);
+
+        },
+        mounted(){
+            console.log('mounted执行了');
+            console.log(document.querySelector('.info1').innerText);
+            console.log(this.$refs);
+        },
+        // 更新前，dom更新前
+        beforeUpdate(){
+            console.log('beforeUpdate执行了');
+            console.log(this.message);
+        },
+        //更新完成，dom更新后
+        updated() {
+            console.log('updated执行了');
+            console.log(this.message);
+
+            //更新轮播，滚动的事件
+
+        },
+
+        beforeDestroy(){
+            console.log('beforeDestroy执行了');
+        },
+        destroyed(){
+            console.log('destroyed执行了');
+        }
+
+
+    });
+
+
+    /*
+    创建:
+    1.new Vue();
+    2.读取生命周期函数
+    3.beforeCreate()
+    4.加载data,computed,watch,methods....添加属性的数据观测
+    5.created()
+
+    挂载:
+    6.判断是否有$sel/等待$mount()调用
+    7.beforeMount()
+    8.渲染dom结构
+    9.mounted()
+    //在mounted之后操作dom结构，但是不用使用document访问dom。
+    // 操作dom的方式使用ref给dom赋值，通过$refs访问
+
+
+    更新：更新的钩子函数中不要修改属性。
+    10.属性发生了变化
+    11.beforeUpdate()  dom更新前
+    12.重新渲染dom，dom进行更新
+    13.updated()  dom更新完毕
+    //如果数据变化，要操作更新后的dom结构，使用$nextTick()
+
+
+    // 销毁：
+    14:beforeDestroy()
+    15.移除事件监听，绑定
+    16.destroyed()
+
+
+
+
+    $refs:获得vm实例作用下的dom
+    $nextTick()数据发生变化后，监听dom更新完毕的事件
+    $forceUpdate()强制更新dom
+
+    */
+    
+    </script>
+</body>
+</html>
+
+

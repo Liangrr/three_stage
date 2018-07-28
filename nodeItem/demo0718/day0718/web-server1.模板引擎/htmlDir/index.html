@@ -1,0 +1,48 @@
+{% extends './layout.html' %}
+
+
+
+
+{% block test2 %}
+        
+    <!-- 插值表达式,在{{}}内部按js逻辑计算得到结果。再显示 -->
+    {{1+2+3+4+5}}
+
+    <!-- 判断 -->
+    {% if username %}
+    <p>欢迎光临,{{username}}</p>
+    {% else %}
+    <p>请登录！</p>
+    {% endif %}
+
+    <!-- 循环 -->
+    <ul>
+        {% for item in goodslist %}
+        <li>商品名字：{{item.title}}，价格：{{item.price}}</li>
+        {% endfor %}
+    </ul>
+
+    {% include './goodslist.html' %}
+    {% include './goodslist.html' %}
+    {% include './goodslist.html' %}
+    {% include './goodslist.html' %}
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+    alert(1);
+</script>
+<script src="/static/js/home.js"></script>
+{% endblock %}
+
+
+{% block css %}
+<style>
+header{
+    background: red;
+}
+</style>
+<link rel="stylesheet" href="/static/css/home.css"/>
+{% endblock %}

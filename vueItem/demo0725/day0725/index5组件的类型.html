@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app1">
+        <h1>实例1</h1>
+        <p>{{message}}</p>
+        <hello></hello>
+        <acomponent></acomponent>
+        <bcomponent></bcomponent>
+    </div>
+
+    <hr/>
+
+    <div id="app2">
+        <h1>实例2</h1>
+        <p>{{message}}</p>
+        <hello></hello>
+        <acomponent></acomponent>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    /*
+    组件的类型
+    1.全局组件：在Vue的作用范围内都能使用
+    2.局部组件：在哪个实例或者组件中声明，这能在这个实例或者组件内用
+    */    
+
+    //全局组件
+    Vue.component(
+        'hello',
+        {
+            template: `
+                <header>
+                    <h1>hello world</h1>
+                    <p>这是一个hello组件</p>
+                </header>
+            `
+        }
+    );
+
+    Vue.component(
+        'world',
+        {
+            template: `
+                <header>
+                    <h1>hello world</h1>
+                    <p>这是一个world组件</p>
+                </header>
+            `
+        }
+    );
+
+
+    var vm1 = new Vue({
+        el: '#app1',
+        data: {
+            message: 'vm1'
+        },
+        //声明局部组件
+        components: {
+            //key值： 组件名字
+            // value值：组件的构成
+            acomponent: {
+                template: `
+                    <div>
+                        <a href="#">fasdfasdfsad</a>
+                        <a href="#">fasdfasdfsad</a>
+                        <a href="#">fasdfasdfsad</a>
+                        <a href="#">fasdfasdfsad</a>
+                    </div>
+                `
+            },
+            bcomponent: {
+                template: `
+                    <ul>
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                    </ul>
+                `
+            }
+        }
+    });
+
+
+    var vm2 = new Vue({
+        el: '#app2',
+        data: {
+            message: 'vm2'
+        }
+    });
+    
+    </script>
+</body>
+</html>

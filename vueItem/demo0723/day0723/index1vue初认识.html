@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+
+        <h1>{{message}}</h1>
+
+        <!-- <input type="text" v-model="value"/> -->
+        <input type="text" v-model="message"/>
+
+    </div>
+
+
+    <script src="./vue.js"></script>
+    
+    <script>
+        /*
+        数据双向绑定:
+        vm实例的属性发生变化，dom显示的就会发生变化
+
+        dom发生变化，vm实例对应的属性就会发生变化
+        */ 
+
+
+        // 创建vue实例
+        var vm = new Vue({//vue实例的配置项
+            //该vue实例作用在哪一个dom结构内容
+            el: '#app',
+            //vue实例的属性
+            data: {
+                message: 'hello vue!',
+                value: '123'
+            }
+        });
+
+        console.log(vm.message);//推荐
+        // console.log(vm._data.message);
+        // console.log(vm.$data.message);
+    
+    </script>
+</body>
+</html>

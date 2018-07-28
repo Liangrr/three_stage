@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			a:<input type="number" v-model="a">
+			b:<input type="number" v-model="b">
+			<h1>{{count}}</h1>
+			<h2>{{obj}}</h2>
+			name:<input type="text" v-model="obj.name">
+			age:<input type="text" v-model="obj.age">
+		</div>
+	</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el:'#app',
+		data:{
+			a: 1,
+            b: 2,
+            obj: {
+                name: '张三',
+                age: 10
+            }
+		},
+		computed:{
+			count(){
+				return (this.a-0+this.b-0);
+			}
+		},
+		watch:{
+			a:function(newVal,oldVal){
+//				console.log(newVal,oldVal)
+			},
+			b(newVal,oldVal){
+				console.log(newVal,oldVal);
+			},
+			obj(newVal,oldVal){
+				console.log('obj1')
+				console.log(newVal,oldVal)
+			},
+			'obj.name':function(newVal,oldVal){
+				console.log(newVal,oldVal)
+			},
+			obj:{
+				handler(newVal,oldVal){
+					console.log(newVal,oldVal)
+				},
+				deep:true
+			}
+		}
+	})
+</script>

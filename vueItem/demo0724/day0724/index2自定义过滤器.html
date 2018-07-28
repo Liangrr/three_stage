@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <p>{{arr}}</p>
+        <p>{{arr | arrFilter}}</p>
+
+        <p>评分：{{star | star}}</p>
+        <p>评分：{{star | star('♣', '♧')}}</p>
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    // 声明自定义的过滤器
+    // 参数1：过滤器名字
+    // 参数2：过滤器的实现函数
+    Vue.filter('arrFilter', (value)=>{
+        console.log('arrFilter过滤器调用了');
+        console.log(value);
+        var str = '';
+        value.map((item,index)=>{
+            if(index == (value.length-1)){
+                str += item;
+            }else{
+                str += item  +'、 ';
+            }
+            
+        })
+        //过滤器的输出值
+        return str;
+    })
+
+    Vue.filter('star', (value, type1='★', type2='☆')=>{
+        var starType1 = value;//实心
+        var starType2 = 5-value;//空心
+        var tmp = '';
+        for(var i = 0; i < starType1; i++){
+            tmp += type1;
+        }
+        for(var i = 0; i < starType2; i++){
+            tmp += type2;
+        }
+        return tmp;
+    })
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            arr: ['html5', 'UI', 'java'],
+            star: 1//0~5
+        }
+    });
+    
+    </script>
+</body>
+</html>

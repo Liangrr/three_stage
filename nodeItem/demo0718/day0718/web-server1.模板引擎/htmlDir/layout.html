@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 占位 -->
+    {% block css %}
+    {% endblock %}
+
+</head>
+<body>
+
+    <header>
+        <h1>商城</h1>
+        <ul>
+            <li>首页</li>
+            <li>商家</li>
+            <li>商品</li>
+            <li>特惠</li>
+        </ul>
+    </header>
+
+    <div class="content">
+
+        <!-- 占位 -->
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+    <hr/>
+    <hr/>
+    {% block test1 %}
+        {% endblock %}
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    {% block test2 %}
+        {% endblock %}
+    <hr/>
+    <hr/>
+    {% block test3 %}
+        {% endblock %}
+    <hr/>
+
+
+    <!-- 占位 -->
+    {% block js %}
+    {% endblock %}
+    
+</body>
+</html>
+
+

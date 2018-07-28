@@ -1,0 +1,61 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+.header{
+    width: 100%;
+    height: 44px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: palevioletred;
+}
+.content{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 44px;
+    bottom: 49px;
+    overflow: auto;
+}
+.tabs{
+    width: 100%;
+    height: 49px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rebeccapurple;
+    display: flex;
+}
+.tabs .tab{
+    flex: 1;
+    list-style: none;
+    text-align: center;
+    line-height: 49px;
+    color: #fff;
+}
+
+
+
+
+.content .banner{
+    height: 140px;
+    background: lavender;
+}
+.content .activity{
+    height: 240px;
+    background: lavenderblush;
+}
+.content .top{
+    height: 130px;
+    background: lemonchiffon;
+}
+.content .goodslist{
+    height: 400px;
+    background: lightblue;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text">
+    <button onclick="commitAction()">提交</button>
+
+    <script>
+        var commitAction = function(){
+        	sessionStorage.setItem('value', document.querySelector('input').value);
+        	window.location.href = 'test.html';
+        	
+//          window.location.href = 'test.html?value='+document.querySelector('input').value;
+        }
+    </script>
+</body>
+</html>

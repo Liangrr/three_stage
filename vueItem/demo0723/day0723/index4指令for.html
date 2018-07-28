@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+    </style>
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+
+        <!-- v-for 遍历的指令 -->
+
+        <!-- 数组遍历 -->
+        <ul>
+            <!-- <li v-for="value in arr">{{value}}</li> -->
+            <li v-for="(value, i) in arr">{{value}}-------{{i}}</li>\
+
+
+            <li v-for="(value, i) in ['item1', 'item2', 'item3', 'item4']">{{value}}-------{{i}}</li>
+        
+        </ul>
+
+
+        <!-- 对象遍历 -->
+        <ul>
+            <!-- <li v-for="value in obj">{{value}}</li> -->
+            <!-- <li v-for="(value, key) in obj">{{value}}-----{{key}}</li> -->
+            <li v-for="(v, k) in obj">{{v}}-----{{k}}</li>
+            <li v-for="(v, k) in {}">{{v}}-----{{k}}</li>
+        </ul>
+
+        <!-- 字符串的遍历 -->
+        <ul>
+            <!-- <li v-for="item in str">{{item}}</li> -->
+            <li v-for="(item, index) in str">{{item}}-----{{index}}</li>
+        </ul>
+
+
+        <!-- 数字的遍历,只能遍历正整数 -->
+        <ul>
+            <!-- <li v-for="num in 10"> -->
+            <!-- <li v-for="(num, index) in 10"> -->
+            <li v-for="(num, index) in arr.length">
+                {{num}}------------{{index}}
+            </li>
+        </ul>
+
+    </div>
+    
+    <script src="vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                arr: ['item1', 'item2', 'item3', 'item4'],
+                obj: {
+                    name: 'zhangsan',
+                    age: 40
+                },
+                str: 'qianfeng'
+            }
+        })
+    </script>
+</body>
+</html>

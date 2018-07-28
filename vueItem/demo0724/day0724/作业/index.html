@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active{
+            background: lavender;
+        }
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app" v-cloak>
+        <div class="add" v-if="showflag==0">
+            <h1>新增</h1>
+            <p>
+                姓名：
+                <input type="text" v-model="name">
+            </p>
+            <p>
+                性别：
+                <label v-for="sexItem in sexArr">
+                    <input type="radio" :value="sexItem" v-model="sex"/>{{sexItem}}
+                </label>
+            </p>
+            <p>
+                感兴趣方向：
+                <label v-for="courseItem in courseArr">
+                    <input type="checkbox" :value="courseItem" v-model="course">{{courseItem}}
+                </label>
+            </p>
+            <p>
+                毕业时间：
+                <select v-model="year">
+                    <option v-for="yearItem in yearArr" :value="yearItem">
+                        {{yearItem}}
+                    </option>
+                </select>
+            </p>
+            <p>
+                备注:
+                <textarea v-model="des"></textarea>
+            </p>
+            <p>
+                <button @click="addAction()">新增</button>
+                <button @click="cancelAddAction()">取消</button>
+            </p>
+        </div>
+        <div class="show" v-else-if="showflag==1">
+            <h1>查看</h1>
+            <p>姓名：{{showInfo.name}}</p>
+            <p>性别：{{showInfo.sex}}</p>
+            <p>培训方向：{{showInfo.course}}</p>
+            <p>毕业时间：{{showInfo.year}}</p>
+            <p>备注：{{showInfo.des}}</p>
+            <p>
+                <button @click="finishShowAction()">完成查看</button>
+            </p>
+        </div>
+        <div class="modify" v-else-if="showflag==2">
+            <h1>修改</h1>
+            <p>
+                    姓名：
+                    <input type="text" v-model="modifyInfo.name">
+                </p>
+                <p>
+                    性别：
+                    <label v-for="sexItem in sexArr">
+                        <input type="radio" :value="sexItem" v-model="modifyInfo.sex"/>{{sexItem}}
+                    </label>
+                </p>
+                <p>
+                    感兴趣方向：
+                    <label v-for="courseItem in courseArr">
+                        <input type="checkbox" :value="courseItem" v-model="modifyInfo.course">{{courseItem}}
+                    </label>
+                </p>
+                <p>
+                    毕业时间：
+                    <select v-model="modifyInfo.year">
+                        <option v-for="yearItem in yearArr" :value="yearItem">
+                            {{yearItem}}
+                        </option>
+                    </select>
+                </p>
+                <p>
+                    备注:
+                    <textarea v-model="modifyInfo.des"></textarea>
+                </p>
+                <p>
+                    <button @click="finishModifyAction()">修改</button>
+                    <button @click="cancelModifyAction()">取消</button>
+                </p>
+        </div>
+
+        <ul class="list">
+            <h1>列表</h1>
+            <li v-for="(person, index) in dataSource" 
+                :class="{active: selectID == person.id}"
+                @click="selectAction(index)">
+                {{person.name}}
+                <button @click.stop="deleteAction(index)">删除</button>
+                <button @click.stop="showAction(index)">查看</button>
+                <button @click.stop="modifyAction(index)">修改</button>
+            </li>
+        </ul>
+
+    </div>
+    
+    <script src="vue.js"></script>
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            // 使用的初始数据
+            sexArr: ['男', '女'],
+            courseArr: ['html5', 'ui', 'java', 'python', '大数据', '测试'],
+            yearArr: [],
+
+            showflag: 0,//0:新增，1：查看，2修改
+
+            //用户选择的值
+            name: '',
+            sex: '',
+            course: [],
+            year: '',
+            des: '',
+
+            //每一次新增用户的ID
+            personID: 1,
+
+            //用户数据的数据源
+            dataSource: [],
+            //查看的数据
+            showInfo: {},
+            // 修改的数据
+            modifyInfo: {},
+            //修改的下标
+            modifyIndex: -1,
+            //选中的列表
+            selectID: -1
+        },
+        methods: {
+            //持久化数据
+            saveData(){
+                localStorage.setItem('list', JSON.stringify(this.dataSource));
+                localStorage.setItem('index', this.personID);
+            },
+            //新增事件
+            addAction(){
+                //获得用户输入的数据
+                var personInfo = {
+                    id: this.personID++,
+                    name: this.name,
+                    sex: this.sex,
+                    course: this.course,
+                    year: this.year,
+                    des: this.des
+                }
+                //将用户数据保存在数据源中，显示在列表上
+                this.dataSource.push(personInfo);
+                //持久化数据
+                this.saveData();
+                //清空输入框
+                this.cancelAddAction();
+            },
+            //取消新增事件
+            cancelAddAction(){
+                this.name = '';
+                this.sex = '';
+                this.course = [];
+                this.year = '';
+                this.des = '';
+            },
+            //删除事件
+            deleteAction(index){
+                //删除数据源中对应的数据
+                this.dataSource.splice(index, 1);
+                //持久化数据
+                this.saveData();
+            },
+            //查看事件
+            showAction(index){
+                // 取出查看数据
+                var info = this.dataSource[index];
+                //将数据显示在dom中
+                this.showInfo = info;
+                // 显示查看的dom
+                this.showflag = 1;
+            },
+            //完成查看
+            finishShowAction(){
+                this.showflag = 0;
+                this.showInfo = {};
+            },
+            //修改点击事件
+            modifyAction(index){
+                //记录需要修改数据的下标
+                this.modifyIndex = index;
+
+                // 取出需要修改的数据
+                var info = this.dataSource[index];
+                //将数据显示在dom中
+                // this.modifyInfo = info;//浅拷贝
+                // this.modifyInfo = Object.assign({}, info); //深拷贝
+                this.modifyInfo = {...info};//深拷贝
+                // 显示修改的dom
+                this.showflag = 2;
+            },
+            //完成修改事件
+            finishModifyAction(){
+                //获得修改的数据
+                console.log(this.modifyInfo);
+                // 替换到数据对应的位置:  this.modifyIndex
+                this.dataSource.splice(this.modifyIndex, 1, this.modifyInfo);
+                //持久化数据
+                this.saveData();
+                //显示回新增
+                this.cancelModifyAction();
+            },
+            //取消修改事件
+            cancelModifyAction(){
+                this.showflag = 0;
+                this.modifyInfo = {};
+                this.modifyIndex = -1;
+            },
+
+            //li的点击事件
+            selectAction(index){
+                this.selectID = this.dataSource[index].id;
+            }
+        }
+    })
+
+    //初始化毕业时间列表
+    for(var i = 0; i < 10; i++){
+        vm.yearArr.push(2010+i);
+    }
+
+    //取出数据，进行页面的展示
+    if(localStorage.getItem('list')){
+        vm.dataSource = JSON.parse(localStorage.getItem('list'));
+    }
+    if(localStorage.getItem('index')){
+        vm.personID = localStorage.getItem('index');
+    }
+
+
+    /*
+    Array.from//类方法
+    var arr = [1,2,3,4];
+    arr.push//对象方法
+    */
+
+
+/*
+    var obj = {};
+    var obj1 = {name: '张三'};
+    var obj2 = {age: 10};
+    var obj3 = {height: 100};
+
+    // assign()是Object的类方法
+    // 将多个对象合并给一个对象
+    // 参数1：目标对象
+    // 剩余参数：源对象
+    var result = Object.assign(obj, obj1, obj2, obj3);
+    console.log(result);
+    console.log(obj);
+    console.log(obj1);
+    console.log(obj2);
+    console.log(obj3);
+*/
+
+/*
+    var arr = [1,2,3,4,5];
+    var arr2 = [...arr];
+    arr2.splice(0, 1, 'a');
+    console.log(arr, arr2);
+*/
+
+/*
+    var obj = {name: 'zhangsan', age: 10, height: 100};
+    var obj2 = {...obj};
+    obj2.name = 'lisi';
+    console.log(obj, obj2);
+*/
+    
+    </script>
+</body>
+</html>

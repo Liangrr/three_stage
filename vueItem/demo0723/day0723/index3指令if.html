@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+    .box{
+        width: 100px;
+        height: 100px;
+        background: red;
+        margin: 10px;
+    }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <input type="text" v-model="value">
+        <div class="box" v-if="value=='A'">box1-A</div>
+        <div class="box" v-else-if="value=='B'">box2-B</div>
+        <div class="box" v-else-if="value=='C'">box3-C</div>
+        <div class="box" v-else>box4-D</div>
+
+    </div>
+    
+    <script src="vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                value: 'A'
+            }
+        })
+    </script>
+</body>
+</html>

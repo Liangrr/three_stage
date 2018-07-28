@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="wrap">
+			<hello v-for="post in posts" :key="post.id" :title="post.title"></hello>
+			<button-counter></button-counter>
+		</div>
+	</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	Vue.component('hello',{
+		props:['title'],
+		template:`
+			<h1>{{title}}</h1>
+		`
+	})
+	Vue.component('buttonCounter',{
+		data:function(){
+			return {count:0}
+		},
+		template:
+		`<button v-on:click="count++">You clicked me {{ count }} times.</button>`
+	})
+	new Vue({
+		el:'#wrap',
+		data:{
+			posts: [
+		      { id: 1, title: 'My journey with Vue' },
+		      { id: 2, title: 'Blogging with Vue' },
+		      { id: 3, title: 'Why Vue is so fun' }
+		    ]
+		}
+	})
+</script>

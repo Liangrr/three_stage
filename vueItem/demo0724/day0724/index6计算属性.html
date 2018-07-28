@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <p>
+            a: <input type="number" v-model.number="a">
+        </p>
+        <p>
+            b: <input type="number" v-model.number="b">
+        </p>
+        <p>总和：{{count1}}</p>
+        <p>总和：{{count2()}}</p>
+
+        <button @click="printAction()">测试</button>
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    // 计算属性：也是属性的一种。通过其他的属性(data,computed)计算得到的属性
+    // 并且相关属性发生变化时，计算属性才重新计算。将值进行缓存
+    // 如果相关属性不发生变化，计算属性直接读取上一次计算缓存下来的值。
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            a: 1,
+            b: 2
+        },
+        //计算属性
+        computed: {
+            count1: function(){
+                console.log('计算属性执行');
+                return this.a+this.b;
+            }
+        },
+        methods: {
+            count2: function(){
+                console.log('方法执行');
+                return this.a+this.b;
+            },
+            printAction(){
+                console.log('计算属性', this.count1);
+                console.log('方法', this.count2());
+            }
+        }
+    });
+
+
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<h1 >{{message}}</h1>
+			<h2 v-html="html"></h2>
+			<h3 v-show="isShow">是否展示display</h3>
+			<h4 v-if="1==2">条件语句if</h4>
+			<h5 v-else-if="2===2">我是else-if</h5>
+			<h6 v-else>我是else</h6>
+			<input type="text" v-model="message"/>
+			
+			<ol>
+				<li v-for="todo in todos">{{todo.text}}</li>
+			</ol>
+			
+			
+		</div>
+	</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script type="text/javascript">
+	var app = new Vue({
+		el:'#app',
+		data:{
+			message:'文本类型!',
+			html:'<mark>html类型</mark>',
+			isShow: true,
+			todos:[
+		      { text: '学习 JavaScript' },
+		      { text: '学习 Vue' },
+		      { text: '整个牛项目' }
+		    ]
+		}
+	})
+	console.log(app)
+</script>

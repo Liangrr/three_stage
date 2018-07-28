@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .box{
+        width: 100px;
+        height: 100px;
+        background: red;
+    }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+
+        <p>dfasdfas</p>
+        <p>dfasdfas</p>
+        <p>dfasdfas</p>
+        <p>dfasdfas</p>
+        <div class="box" v-drag.y="true"></div>
+
+        <h1>fasdfsadkl</h1>
+        <h1>fasdfsadkl</h1>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    /*
+    v-drag  可拖拽
+    v-drag=false   不可拖拽
+    v-drag=true   可拖拽
+    
+    v-drag.x   x轴可拖拽，y轴不可拖拽
+    v-drag.y   y轴可拖拽，x轴不可拖拽
+
+    v-drag.x.y   y轴可拖拽，x轴可拖拽
+
+    */
+
+    Vue.directive("drag", function(el, info){
+        console.log(info);
+        console.log(info.expression);
+        console.log(info.modifiers);
+        if(!info.value && info.expression){//指令的值为false，不需要拖拽
+            return;                         //没有写值默认为true
+        }
+
+        console.log('执行');
+        //判断哪个方向需要拖拽
+        var isDragX = info.modifiers.x;
+        var isDragY = info.modifiers.y;
+        if(!info.modifiers.x && !info.modifiers.y){
+            isDragX = true;
+            isDragY = true;
+        }
+        console.log('x:'+isDragX, 'y:'+isDragY);
+        
+
+        //为了记录每一次停止值
+        var offsetX = 0;
+        var offsetY = 0;
+        el.onmousedown = function(ev){
+            var disX = ev.clientX - offsetX;
+            var disY = ev.clientY - offsetY;
+            console.log(disX, disY);
+            document.onmousemove = function(ev){
+                offsetX = ev.clientX - disX;
+                offsetY = ev.clientY - disY;
+                console.log(offsetX, offsetY);
+                if(isDragX){//x轴可拖拽
+                    el.style.transform = 'translateX('+offsetX+'px)';
+                }
+                if(isDragY){//y轴可拖拽
+                    el.style.transform = 'translateY('+offsetY+'px)';                    
+                }
+                if(isDragX && isDragY){
+                    el.style.transform = 'translate('+offsetX+'px,'+offsetY+'px)';                    
+                }
+            }
+            document.onmouseup = function(){
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+    })
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            
+        }
+    });
+    
+    </script>
+</body>
+</html>

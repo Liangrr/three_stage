@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>首页</h1>
+
+    <script src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/js/lib/jquery-1.10.2_d88366fd.js"></script>
+    <script>
+
+        $.ajax({
+            url: '/api/register',
+            data: {
+                username: '张三',
+                password: '123456'
+            },
+            type: "POST",
+            success: function(data){
+                console.log('请求成功');
+            },
+            fail: function(){
+                console.log('请求失败');
+            }
+        })
+
+        $.ajax({
+            url: '/api/login',
+            data: {
+                username: '张三',
+                password: '123456'
+            },
+            type: "POST",
+            success: function(data){
+                console.log('请求成功');
+            },
+            fail: function(){
+                console.log('请求失败');
+            }
+        })
+
+
+        $.ajax({
+            url: '/api/userInfo',
+            data: {
+                userid: '007'
+            },
+            type: "GET",
+            success: function(data){
+                console.log('请求成功');
+            },
+            fail: function(){
+                console.log('请求失败');
+            }
+        })
+
+
+        $.ajax({
+            url: '/api/friendList',
+            data: {
+                userid: '007'
+            },
+            type: "GET",
+            success: function(data){
+                console.log('请求成功');
+            },
+            fail: function(){
+                console.log('请求失败');
+            }
+        })
+
+
+        
+    
+    </script>
+</body>
+</html>

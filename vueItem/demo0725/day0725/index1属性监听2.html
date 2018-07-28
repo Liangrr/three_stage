@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        a:<input type="number" v-model="a"/><br/>
+        b:<input type="number" v-model="b"/><br/>
+        name:<input type="text" v-model="obj.name"/><br/>
+        age:<input type="text" v-model="obj.age"/><br/>
+
+        <button @click="btnAction()">监听</button>
+
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            a: 1,
+            b: 2,
+            obj: {
+                name: '张三',
+                age: 10
+            }
+        },
+        computed: {
+            count(){
+                return this.a+this.b;
+            }
+        },
+        methods: {
+            btnAction(){
+                this.$watch('a', function(newVal, oldval){
+                    console.log("变化了");
+                });
+            }
+        }
+    });
+
+    //vm实例的方法，对vm的属性即相关的函数执行监听
+    // 参数1：监听的值
+    // 参数2：回调
+    // 参数3:可选参数，监听的配置
+    // vm.$watch('a', function(newVal, oldval){
+    // vm.$watch('count', function(newVal, oldval){
+    // vm.$watch('obj', function(newVal, oldval){
+    // vm.$watch('obj.name', function(newVal, oldval){
+    vm.$watch(function(){
+        //this指向实例对象
+        var count = this.a + this.b;
+
+        return '';
+
+    }, function(newVal, oldval){
+
+        console.log("变化了");
+        console.log(newVal, oldval);
+    }, {
+        deep: true
+    });
+
+
+
+
+
+
+    
+    </script>
+</body>
+</html>

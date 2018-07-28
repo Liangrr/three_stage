@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <!-- v-html -->
+        <p v-hello.stop.prevent="1+2+3+4"></p>
+
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    // 自定义指令,在使用该指令的实例创建前声明指令
+    // 参数1：指令名字
+    // 参数2:指令的实现函数
+    Vue.directive('hello', (el, info)=>{
+        // el: 指令所作用的元素
+        // info：指令相关的信息
+        console.log('hello指令调用了');
+        console.log(el, info);
+        console.log(info.expression)
+        el.innerHtml = info.value;
+    })
+
+
+    /*
+    v-drag  可拖拽
+    v-drag=false   不可拖拽
+    v-drag=true   可拖拽
+    
+    v-drag.x   x轴可拖拽，y轴不可拖拽
+    v-drag.y   y轴可拖拽，x轴不可拖拽
+
+    v-drag.x.y   y轴可拖拽，x轴可拖拽
+
+    */
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+
+        }
+    });
+    
+    </script>
+</body>
+</html>

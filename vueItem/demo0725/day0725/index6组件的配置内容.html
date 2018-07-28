@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+
+        <hello></hello>
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        components: {
+            hello: {
+                //配置组件的dom结构
+                template: `
+                    <header>
+                        <h1>{{message}}</h1>
+                        <p>这是一个world组件</p>
+                    </header>
+                `,
+                data(){//为什么组件的data是一个函数。
+                    return {
+                        message: 'hello world'
+                    }
+                },
+//              因为组件可以建立多个,如果data是对象的话,
+//              那么建立出来的会共用一个地址,牵一而动全身.而函数则返回自身的值
+                // computed,
+                // watch,
+                // methods,
+                // components,
+                //声明周期方法
+
+
+            }
+        }
+    });
+    
+    </script>
+</body>
+</html>

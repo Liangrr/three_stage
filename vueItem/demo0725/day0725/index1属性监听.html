@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        a:<input type="number" v-model="a"/><br/>
+        b:<input type="number" v-model="b"/><br/>
+        name:<input type="text" v-model="obj.name"/><br/>
+        age:<input type="text" v-model="obj.age"/><br/>
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            a: 1,
+            b: 2,
+            obj: {
+                name: '张三',
+                age: 10
+            }
+        },
+        computed: {
+            count(){
+                return this.a+this.b;
+            }
+        },
+        //属性监听,监听变化
+        watch: {
+            //监听完整写法
+            // a: {
+            //     handler: function(){
+            //         console.log('a变化了2');
+            //     }
+            // }
+
+            //a属性如果发生了变化，a配置函数就会执行
+            //简写
+            a: function(newVal, oldVal){
+                console.log('a变化了1');
+                console.log(newVal, oldVal);
+            },
+            count(newVal, oldVal){
+                console.log('count变化了1');
+                console.log(newVal, oldVal);
+            },
+            obj(newVal, oldVal){//只能监听对象的引用，不能内部属性变化
+                console.log('obj变化了1');
+                console.log(newVal, oldVal);
+            },
+            obj: {//只能监听对象的引用，能内部属性变化
+                handler(newVal, oldVal){
+                    console.log('obj变化了2');
+                    console.log(newVal, oldVal);
+                },
+                deep: true
+            },
+            'obj.name': function(newVal, oldVal){
+                console.log('obj.name变化了');
+                console.log(newVal, oldVal);
+            }
+        }
+    });
+
+
+
+
+
+
+    
+    </script>
+</body>
+</html>

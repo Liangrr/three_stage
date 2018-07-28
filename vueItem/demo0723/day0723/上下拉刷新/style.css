@@ -1,0 +1,89 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+.header{
+    width: 100%;
+    height: 44px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: palevioletred;
+}
+.content{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 44px;
+    bottom: 49px;
+    overflow: hidden;
+}
+.tabs{
+    width: 100%;
+    height: 49px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rebeccapurple;
+    display: flex;
+}
+.tabs .tab{
+    flex: 1;
+    list-style: none;
+    text-align: center;
+    line-height: 49px;
+    color: #fff;
+}
+
+
+
+
+.content .banner{
+    height: 140px;
+    background: lavender;
+}
+.content .activity{
+    height: 240px;
+    background: lavenderblush;
+}
+.content .top{
+    height: 130px;
+    background: lemonchiffon;
+}
+.content .goodslist{
+    height: 400px;
+    background: lightblue;
+}
+
+
+
+
+.refresh, .loadmore{
+    height: 50px;
+    background: lightgray;
+    text-align: center;
+    line-height: 50px;
+    font-size: 14px;
+}
+.refresh b, .loadmore .b{
+    padding: 0 10px;
+    font-size: 18px;
+    display: inline-block;
+    transition: transform 200ms;
+}
+
+@keyframes ratateAni{
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
+.refresh b.active, .loadmore .b.active{
+    animation: ratateAni 1s infinite linear;
+}
+.refresh b.up, .loadmore .b.down{
+    transform: rotate(180deg);
+}

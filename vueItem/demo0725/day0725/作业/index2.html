@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in goodslist">
+                {{item.name}}--{{item.price}}--
+                <button @click="reduce(index)">-</button>
+                <input type="text" v-model.number="item.count">
+                <button @click="add(index)">+</button>
+            </li>
+        </ul>
+        <p>买了{{allcount}}件商品</p>
+        <p>总价：{{allPrice}}</p>
+        <p>折后价：{{discount}}</p>
+        <p>满减价：{{reducePrice}}</p>
+        <p>邮费：{{free}}</p>
+        <p>应付： {{pay}}</p>
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+
+
+        /*
+    作业：
+    买2件8.8折
+    买4件7.8折
+    500-50   700—100
+    邮费：20
+    满399包邮
+    为您优惠了：？
+    求应付：？
+    */
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            goodslist: [
+                {name: '铅笔', price: 10, count: 0},
+                {name: '笔记本', price: 89, count: 0},
+                {name: 'javascript编程', price: 199, count: 0},
+                {name: '橡皮擦', price: 5, count: 0},
+                {name: '文具盒', price: 30, count: 0}
+            ]
+        },
+        computed: {
+            allcount(){
+                var count = 0;
+                this.goodslist.map(item=>{
+                    count += item.count;
+                })
+                return count;
+            },
+            //商品原价总价
+            allPrice(){
+                var tmp = 0;
+                this.goodslist.map(item=>{
+                    tmp += item.price * item.count;
+                })
+                return tmp;
+            },
+            //计算折扣
+            discount(){
+                if(this.allcount >= 2 && this.allcount < 4){
+                    //8.8折
+                    return this.allPrice * 0.88;
+                }
+                else if(this.allcount >= 4){
+                    //7.8折
+                    return this.allPrice * 0.78;
+                }
+                else{
+                    //没有折扣
+                    return this.allPrice;
+                }
+            },
+            reducePrice(){
+                if(this.discount >= 500 && this.discount < 700){
+                    return this.discount - 50;
+                }
+                else if(this.discount >= 700){
+                    return this.discount - 100;
+                }else{
+                    return this.discount;
+                }
+            },
+            free(){
+                if(this.reducePrice >= 399){
+                    return 0;
+                }else if(this.allcount > 0){
+                    return 20;
+                }else{
+                    return '';
+                }
+            },
+            pay(){
+                return this.reducePrice + this.free;
+            }
+
+        },
+        methods: {
+            // 减的点击事件
+            reduce(index){
+                if(this.goodslist[index].count <= 0){
+                    alert('不能再少了');
+                    return;
+                }
+                this.goodslist[index].count--;
+            },
+            // 加的点击事件
+            add(index){
+                this.goodslist[index].count++;
+            }
+        }
+    });
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bundle/css/swiper.css"/>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .swiper-slide img{
+        width: 100%;
+    }
+    </style>
+    <script src="./bundle/js/swiper.js"></script>
+</head>
+<body>
+
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                    
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <button onclick="printAction()">按钮</button>
+
+        <script src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/js/lib/jquery-1.10.2_d88366fd.js"></script>
+        <script>        
+            var swiperDOM = document.querySelector('.swiper-container');
+            var mySwiper = new Swiper(swiperDOM, {
+                pagination: '.swiper-pagination',
+                loop: true
+            });
+            
+            $.ajax({
+                url: '/v4/api/billboard/home?__t=1531965373999',
+                success: function(result){
+                    console.log(result.data.billboards);
+                    var data = result.data.billboards;
+                    var htmlStr = '';
+                    data.map(function(item, index){
+                        htmlStr += '<div class="swiper-slide">\
+                            <img src="'+item.imageUrl+'"/>\
+                            <h1>slide'+index+'</h1>\
+                        </div>';
+                    })
+                    document.querySelector('.swiper-wrapper').innerHTML = htmlStr;
+                    // 常用的方法：
+                    // dom的silde个数发生变化，更新swiper
+                    mySwiper.update();
+                    //重新计算循环滚动
+                    mySwiper.reLoop();
+                    // 滑动到某一页
+                    mySwiper.slideTo(1, 0);
+                }
+            })
+
+
+    
+        </script>
+
+    
+</body>
+</html>

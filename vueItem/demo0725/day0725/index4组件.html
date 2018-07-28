@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+
+            <hr/>
+
+        <!-- 单标签双标签都可以使用 -->
+        <!-- 建议双标签 -->
+        <!-- <hello/> -->
+        <!-- <hello-world></hello-world> -->
+
+        
+        <!-- <content/> -->
+
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+    // 声明组件
+    // 参数1：组件名字，不要使用html中已有的标签名字
+    // 参数2:组件的构成
+    // Vue.component('hello', {//写法：<hello></hello>
+    // Vue.component('Hello', {//写法1：<Hello></Hello> 写法2：<hello></hello>
+    // Vue.component('helloWorld', {//写法：<hello-world></hello-world>
+    // Vue.component('HelloWorld', {//写法：<hello-world></hello-world>
+    // Vue.component('hello-world', {//写法：<hello-world></hello-world>
+    Vue.component('br', {
+        //声明组件的dom结构
+        template: `<header>
+                    <h1>hello world</h1>
+                    <p>这是一个hello组件</p>
+                </header>`
+    });
+    
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            
+        }
+    });
+    
+    </script>
+</body>
+</html>

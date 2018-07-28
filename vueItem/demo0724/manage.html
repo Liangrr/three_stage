@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="manage.css"/>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="register" v-if="showflag==0">
+				<h3>个人信息</h3>
+				<span>姓名:</span>
+				<input id="name" type="text" v-model="name" />
+				<br />
+				
+				<span>性别:</span>
+				<label v-for="sexItem in sexArr">
+					<input type="radio" v-model="sex" :value="sexItem"/>{{sexItem}}
+				</label>
+				<br />
+				
+				<span>毕业时间:</span>
+				<select v-model="year">
+                    <option v-for="yearItem in yearArr" :value="yearItem">
+                        {{yearItem}}
+                    </option>
+                </select>
+				<br />
+				
+				<span>兴趣:</span>
+				<label v-for="hobbyItem in hobbyArr">
+                    <input type="checkbox" :value="hobbyItem" v-model="hobby">{{hobbyItem}}
+                </label>
+				<br />
+				
+				<span class="bz">简介:</span>
+				<textarea v-model="des"></textarea>
+				<br />
+				
+				<button @click="addAction()">新增</button>
+				<button @click="cancelAddAction()">取消</button>
+			</div>
+			
+			<div class="show" v-else-if="showflag==1">
+	            <h3>查看</h3>
+	            <p>姓名：{{showInfo.name}}</p>
+	            <p>性别：{{showInfo.sex}}</p>
+	            <p>毕业时间：{{showInfo.year}}</p>
+	            <p>兴趣：{{showInfo.hobby}}</p>
+	            <p>备注：{{showInfo.des}}</p>
+	            <p>
+	                <button @click="finishShowAction()">完成查看</button>
+	            </p>
+	        </div>
+			
+			<div class="modify" v-if="showflag==2">
+				<h3>修改</h3>
+				<span>姓名:</span>
+				<input id="name" type="text" v-model="modifyInfo.name" />
+				<br />
+				
+				<span>性别:</span>
+				<label v-for="sexItem in sexArr">
+					<input type="radio" v-model="modifyInfo.sex" :value="sexItem"/>{{sexItem}}
+				</label>
+				<br />
+				
+				<span>毕业时间:</span>
+				<select v-model="modifyInfo.year">
+                    <option v-for="yearItem in yearArr" :value="yearItem">
+                        {{yearItem}}
+                    </option>
+                </select>
+				<br />
+				
+				<span>兴趣:</span>
+				<label v-for="hobbyItem in hobbyArr">
+                    <input type="checkbox" :value="hobbyItem" v-model="modifyInfo.hobby">{{hobbyItem}}
+                </label>
+				<br />
+				
+				<span class="bz">简介:</span>
+				<textarea v-model="modifyInfo.des"></textarea>
+				<br />
+				
+				<button @click="finishModifyAction()">修改</button>
+                <button @click="cancelModifyAction()">取消</button>
+			</div>
+			
+			<ul class="list">
+				<h3>列表</h3>
+				<li v-for="(item,index) in dataSource">
+					{{item.name}}
+					<button @click.stop="deleteAction(index)">删除</button>
+                	<button @click.stop="showAction(index)">查看</button>
+                	<button @click.stop="modifyAction(index)">修改</button>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el:'#wrap',
+		data:{
+//			初始数据
+			sexArr:['男','女'],	//性别
+			yearArr:[],	//毕业年份
+			hobbyArr:['html5', 'ui', 'java'],//兴趣
+			showflag:0,	//0:新增，1：查看，2修改
+//			用户选择的属性
+			name:'',
+			sex:'',
+			hobby:[],
+			year:'',
+			des:'',
+			
+			//用户数据的数据源
+            dataSource: [],
+            //查看的数据
+            showInfo: {},
+            // 修改的数据
+            modifyInfo: {},
+            //修改的下标
+            modifyIndex: -1
+		},
+		methods:{
+			//持久化数据
+            saveData(){
+                localStorage.setItem('personList', JSON.stringify(this.dataSource));
+                localStorage.setItem('index', this.personID);
+            },
+			addAction(){
+				var personInfo = {
+	                name: this.name,
+	                sex: this.sex,
+	                hobby: this.hobby,
+	                year: this.year,
+	                des: this.des
+	        	}
+				//将用户数据保存在数据源中，显示在列表上
+                this.dataSource.push(personInfo);
+                //持久化数据
+                this.saveData();
+                //清空输入框
+				this.cancelAddAction();
+			},
+			cancelAddAction(){
+				this.name = '';
+                this.sex = '';
+                this.hobby = [];
+                this.year = '';
+                this.des = '';
+			},
+			deleteAction(index){
+				//删除数据源中对应的数据
+                this.dataSource.splice(index, 1);
+                //持久化数据
+                this.saveData();
+			},
+			//查看事件
+            showAction(index){
+                // 取出查看数据
+                var info = this.dataSource[index];
+                //将数据显示在dom中
+                this.showInfo = info;
+                // 显示查看的dom
+                this.showflag = 1;
+			},
+			finishShowAction(){
+				this.showflag = 0;
+                this.showInfo = {};
+			},
+			modifyAction(index){
+				//记录需要修改数据的下标
+                this.modifyIndex = index;
+                // 取出需要修改的数据
+                var info = this.dataSource[index];
+                this.modifyInfo = {...info};//深拷贝
+                // 显示修改的dom
+				this.showflag = 2;
+			},
+			//完成修改事件
+			finishModifyAction(){
+				// 替换到数据对应的位置:  this.modifyIndex
+                this.dataSource.splice(this.modifyIndex, 1, this.modifyInfo);
+                //持久化数据
+                this.saveData();
+                //显示回新增
+                this.cancelModifyAction();
+			},
+			//取消修改事件
+			cancelModifyAction(){
+				this.showflag = 0;
+                this.modifyInfo = {};
+                this.modifyIndex = -1;
+			}
+		}
+	})
+	//初始化毕业时间列表
+    for(var i = 0; i < 10; i++){
+        vm.yearArr.push(2010+i);
+    }
+    //取出数据，进行页面的展示
+    if(localStorage.getItem('personList')){
+        vm.dataSource = JSON.parse(localStorage.getItem('personList'));
+    }
+//  if(localStorage.getItem('index')){
+//      vm.personID = localStorage.getItem('index');
+//  }
+</script>
